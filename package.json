@@ -1,25 +1,24 @@
 {
-  "name": "@freestar/pubfig-adslot-react-component",
-  "description": "Freestar Pubfig AdSlot React Component",
+  "name": "@freestar/pubfig-adslot-vue-component",
+  "description": "Freestar Pubfig AdSlot Vue Component",
   "keywords": [
     "freestar",
     "pubfig",
-    "adslot-react-component"
+    "adslot-vue-component"
   ],
   "version": "3.6.2",
   "main": "dist/index.js",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/freestarcapital/pubfig-adslot-react-component.git"
+    "url": "https://github.com/BakkesPlugins/pubfig-adslot-vue-component.git"
   },
   "bugs": {
-    "url": "https://github.com/freestarcapital/pubfig-adslot-react-component/issues"
+    "url": "https://github.com/BakkesPlugins/pubfig-adslot-vue-component/issues"
   },
   "license": "ISC",
   "peerDependencies": {
-    "prop-types": "^15.7.2 ",
-    "react": ">=15.7.0"
+    "vue": "^3.0.0"
   },
   "dependencies": {
     "lodash.isequal": "^4.5.0",
@@ -27,27 +26,19 @@
     "terser": "^5.14.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
-    "babel-loader": "^8.2.2",
-    "clean-webpack-plugin": "^3.0.0",
+    "@vitejs/plugin-vue": "^5.0.0",
     "np": "^7.2.0",
     "path": "^0.12.7",
-    "prop-types": "^15.7.2",
-    "react": "^18.1.0",
-    "webpack": "^5.15.0",
-    "webpack-cli": "^4.3.1",
-    "webpack-node-externals": "^3.0.0"
+    "vite": "^5.0.0",
+    "vue": "^3.4.0"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "vite build",
+    "validate": "node validate-api.js",
     "test": "echo No Tests Configured"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "plugin:vue/vue3-recommended"
   },
   "browserslist": {
     "production": [
@@ -64,5 +55,8 @@
   "module": "dist/index.js",
   "files": [
     "dist/*"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
 }

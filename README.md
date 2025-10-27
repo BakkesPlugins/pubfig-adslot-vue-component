@@ -1,50 +1,87 @@
-# Freestar Pubfig Ad Slot React Component
+# Freestar Pubfig Ad Slot Vue Component
 
 ## NOTE: As of v1.1, the prerequisite of the core Pubfig code loaded in the HEAD is no longer required.
 
 ### Install
 
+#### From GitHub Packages (BakkesPlugins)
+
 ```sh
-npm install --save @freestar/pubfig-adslot-react-component
+# Configure npm to use GitHub Packages for @bakkesplugins scope
+npm config set @bakkesplugins:registry https://npm.pkg.github.com
+
+# Install the package
+npm install --save @bakkesplugins/pubfig-adslot-vue-component
+```
+
+You'll need to authenticate with GitHub Packages. Create a `.npmrc` file in your project root:
+
+```
+@bakkesplugins:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+```
+
+Replace `YOUR_GITHUB_TOKEN` with a GitHub Personal Access Token that has `read:packages` permission.
+
+#### From npm (Freestar)
+
+```sh
+npm install --save @freestar/pubfig-adslot-vue-component
 ```
 
 ### Usage
 
 ```js
-import React, { Component } from 'react'
+import { defineComponent, ref } from 'vue'
+// From GitHub Packages:
+import FreestarAdSlot from '@bakkesplugins/pubfig-adslot-vue-component'
+// Or from npm:
+// import FreestarAdSlot from '@freestar/pubfig-adslot-vue-component'
 
-import FreestarAdSlot from '@freestar/pubfig-adslot-react-component'
+export default defineComponent({
+  name: 'Demo',
+  components: {
+    FreestarAdSlot
+  },
+  setup() {
+    const adRefresh = ref(0)
+    
+    const onAdRefresh = () => {
+      adRefresh.value++
+    }
 
-import './demo.css'
-
-class Demo extends Component {
-  render() {
     const placementName = 'PublisherName_970x250_728x90_320x50'
     const slotId = 'in_content_ad_1'
     const publisher = 'publisherName'
     const targeting = { key1: 'value1', key2: 'value2' }
-    const { adRefresh } = this.state
     
-    return (
-      <div>
-        <FreestarAdSlot
-          publisher={publisher}
-          placementName={placementName}
-          slotId={slotId}
-          targeting={targeting}
-          channel='custom_channel'
-          classList={['m-30', 'p-15', 'b-thin-red']}
-          onNewAdSlotsHook={(placementName) => console.log('creating ad', placementName)}
-          onDeleteAdSlotsHook={(placementName) => console.log('destroying ad', placementName)}
-          onAdRefreshHook={(placementName) => console.log('refreshing ad', placementName)}
-        />
-        <button onClick={this.onAdRefresh}>Trigger Refresh</button>
-      </div>
-    )
-  }
-}
-
-export default Demo
+    return {
+      placementName,
+      slotId,
+      publisher,
+      targeting,
+      adRefresh,
+      onAdRefresh
+    }
+  },
+  template: `
+    <div>
+      <FreestarAdSlot
+        :publisher="publisher"
+        :placementName="placementName"
+        :slotId="slotId"
+        :targeting="targeting"
+        channel="custom_channel"
+        :classList="['m-30', 'p-15', 'b-thin-red']"
+        :adRefresh="adRefresh"
+        :onNewAdSlotsHook="(placementName) => console.log('creating ad', placementName)"
+        :onDeleteAdSlotsHook="(placementName) => console.log('destroying ad', placementName)"
+        :onAdRefreshHook="(placementName) => console.log('refreshing ad', placementName)"
+      />
+      <button @click="onAdRefresh">Trigger Refresh</button>
+    </div>
+  `
+})
 ```
 
 ### Props
