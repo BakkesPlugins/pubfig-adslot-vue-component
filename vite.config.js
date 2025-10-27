@@ -28,5 +28,9 @@ export default defineConfig({
   },
   define: {
     __PACKAGE_VERSION__: JSON.stringify(version)
+  },
+  // Ensure TypeScript declaration files are copied during build
+  esbuild: {
+    target: 'es2020'
   }
 })

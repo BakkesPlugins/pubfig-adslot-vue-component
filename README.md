@@ -118,6 +118,52 @@ An *optional* event hook that returns the `placementName` when the component ref
 
 **integrity**
 An *optional* attribute that when passed enables SRI for our pubfig library. The component will use this value for the integrity attribute when loading pubfig 
+
+## TypeScript Support
+
+This package includes TypeScript declarations for full type safety and IntelliSense support.
+
+### TypeScript Usage
+
+```typescript
+import { defineComponent, ref } from 'vue'
+import FreestarAdSlot, { FreestarAdSlotProps } from '@bakkesplugins/pubfig-adslot-vue-component'
+
+export default defineComponent({
+  name: 'Demo',
+  components: {
+    FreestarAdSlot
+  },
+  setup() {
+    const adRefresh = ref(0)
+    
+    // Type-safe props
+    const adSlotProps: Partial<FreestarAdSlotProps> = {
+      publisher: 'your-publisher-id',
+      placementName: 'your-placement-name',
+      targeting: { category: 'sports', location: 'us' },
+      classList: ['custom-ad-class'],
+      adRefresh: adRefresh.value
+    }
+    
+    const onAdRefresh = () => {
+      adRefresh.value++
+    }
+    
+    return {
+      adSlotProps,
+      onAdRefresh
+    }
+  }
+})
+```
+
+### Available Types
+
+- `FreestarAdSlotProps` - Interface for component props
+- `FreestarAdSlotMethods` - Interface for static methods
+- `FreestarAdSlotComponent` - Complete component type
+
 ### API Methods
 
 **FreestarAdSlot.setPageTargeting**
