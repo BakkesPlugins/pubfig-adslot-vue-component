@@ -4,6 +4,27 @@
 
 ### Install
 
+#### From GitHub Packages (BakkesPlugins)
+
+```sh
+# Configure npm to use GitHub Packages for @bakkesplugins scope
+npm config set @bakkesplugins:registry https://npm.pkg.github.com
+
+# Install the package
+npm install --save @bakkesplugins/pubfig-adslot-vue-component
+```
+
+You'll need to authenticate with GitHub Packages. Create a `.npmrc` file in your project root:
+
+```
+@bakkesplugins:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+```
+
+Replace `YOUR_GITHUB_TOKEN` with a GitHub Personal Access Token that has `read:packages` permission.
+
+#### From npm (Freestar)
+
 ```sh
 npm install --save @freestar/pubfig-adslot-vue-component
 ```
@@ -12,7 +33,10 @@ npm install --save @freestar/pubfig-adslot-vue-component
 
 ```js
 import { defineComponent, ref } from 'vue'
-import FreestarAdSlot from '@freestar/pubfig-adslot-vue-component'
+// From GitHub Packages:
+import FreestarAdSlot from '@bakkesplugins/pubfig-adslot-vue-component'
+// Or from npm:
+// import FreestarAdSlot from '@freestar/pubfig-adslot-vue-component'
 
 export default defineComponent({
   name: 'Demo',

@@ -55,5 +55,8 @@
   "module": "dist/index.js",
   "files": [
     "dist/*"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
 }
