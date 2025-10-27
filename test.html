@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freestar AdSlot Vue Component Test</title>
+</head>
+<body>
+    <div id="app"></div>
+    
+    <script type="module">
+        import { createApp, ref } from 'vue'
+        import FreestarAdSlot from './dist/index.js'
+
+        const app = createApp({
+            setup() {
+                const adRefresh = ref(0)
+                
+                const triggerRefresh = () => {
+                    adRefresh.value++
+                    console.log('Refresh triggered, count:', adRefresh.value)
+                }
+
+                return {
+                    adRefresh,
+                    triggerRefresh
+                }
+            },
+            template: `
+                <div>
+                    <h1>Freestar AdSlot Vue Component Test</h1>
+                    <FreestarAdSlot
+                        publisher="test-publisher"
+                        placementName="test_placement_300x250"
+                        :targeting="{ section: 'test', page: 'home' }"
+                        channel="test_channel"
+                        :classList="['ad-slot', 'test-ad']"
+                        :adRefresh="adRefresh"
+                        :onNewAdSlotsHook="(name) => console.log('Ad created:', name)"
+                        :onDeleteAdSlotsHook="(name) => console.log('Ad destroyed:', name)"
+                        :onAdRefreshHook="(name) => console.log('Ad refreshed:', name)"
+                    />
+                    <button @click="triggerRefresh">Trigger Ad Refresh ({{ adRefresh }})</button>
+                    
+                    <h2>Static Methods Test</h2>
+                    <button @click="testStaticMethods">Test Static Methods</button>
+                </div>
+            `,
+            components: {
+                FreestarAdSlot
+            },
+            methods: {
+                testStaticMethods() {
+                    console.log('Testing static methods...')
+                    
+                    // Test setPageTargeting
+                    FreestarAdSlot.setPageTargeting('testKey', 'testValue')
+                    console.log('✓ setPageTargeting called')
+                    
+                    // Test clearPageTargeting
+                    FreestarAdSlot.clearPageTargeting('testKey')
+                    console.log('✓ clearPageTargeting called')
+                    
+                    // Test trackPageview
+                    FreestarAdSlot.trackPageview()
+                    console.log('✓ trackPageview called')
+                    
+                    // Test queueAdCalls
+                    FreestarAdSlot.queueAdCalls(true)
+                    console.log('✓ queueAdCalls called')
+                    
+                    // Test releaseQueuedAds
+                    FreestarAdSlot.releaseQueuedAds()
+                    console.log('✓ releaseQueuedAds called')
+                    
+                    console.log('All static methods executed successfully!')
+                }
+            }
+        })
+
+        app.mount('#app')
+    </script>
+</body>
+</html>
