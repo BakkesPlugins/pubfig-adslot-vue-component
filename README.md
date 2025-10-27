@@ -1,50 +1,63 @@
-# Freestar Pubfig Ad Slot React Component
+# Freestar Pubfig Ad Slot Vue Component
 
 ## NOTE: As of v1.1, the prerequisite of the core Pubfig code loaded in the HEAD is no longer required.
 
 ### Install
 
 ```sh
-npm install --save @freestar/pubfig-adslot-react-component
+npm install --save @freestar/pubfig-adslot-vue-component
 ```
 
 ### Usage
 
 ```js
-import React, { Component } from 'react'
+import { defineComponent, ref } from 'vue'
+import FreestarAdSlot from '@freestar/pubfig-adslot-vue-component'
 
-import FreestarAdSlot from '@freestar/pubfig-adslot-react-component'
+export default defineComponent({
+  name: 'Demo',
+  components: {
+    FreestarAdSlot
+  },
+  setup() {
+    const adRefresh = ref(0)
+    
+    const onAdRefresh = () => {
+      adRefresh.value++
+    }
 
-import './demo.css'
-
-class Demo extends Component {
-  render() {
     const placementName = 'PublisherName_970x250_728x90_320x50'
     const slotId = 'in_content_ad_1'
     const publisher = 'publisherName'
     const targeting = { key1: 'value1', key2: 'value2' }
-    const { adRefresh } = this.state
     
-    return (
-      <div>
-        <FreestarAdSlot
-          publisher={publisher}
-          placementName={placementName}
-          slotId={slotId}
-          targeting={targeting}
-          channel='custom_channel'
-          classList={['m-30', 'p-15', 'b-thin-red']}
-          onNewAdSlotsHook={(placementName) => console.log('creating ad', placementName)}
-          onDeleteAdSlotsHook={(placementName) => console.log('destroying ad', placementName)}
-          onAdRefreshHook={(placementName) => console.log('refreshing ad', placementName)}
-        />
-        <button onClick={this.onAdRefresh}>Trigger Refresh</button>
-      </div>
-    )
-  }
-}
-
-export default Demo
+    return {
+      placementName,
+      slotId,
+      publisher,
+      targeting,
+      adRefresh,
+      onAdRefresh
+    }
+  },
+  template: `
+    <div>
+      <FreestarAdSlot
+        :publisher="publisher"
+        :placementName="placementName"
+        :slotId="slotId"
+        :targeting="targeting"
+        channel="custom_channel"
+        :classList="['m-30', 'p-15', 'b-thin-red']"
+        :adRefresh="adRefresh"
+        :onNewAdSlotsHook="(placementName) => console.log('creating ad', placementName)"
+        :onDeleteAdSlotsHook="(placementName) => console.log('destroying ad', placementName)"
+        :onAdRefreshHook="(placementName) => console.log('refreshing ad', placementName)"
+      />
+      <button @click="onAdRefresh">Trigger Refresh</button>
+    </div>
+  `
+})
 ```
 
 ### Props
